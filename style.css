@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap');
+
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+:root{
+    --size : 100vw;
+    --cell-size : calc(var(--size) * .15);
+    --mark-size : calc(var(--cell-size) * .9);
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.board{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, auto);
+    box-shadow: 0 -15px 15px rgba(255, 255, 255, 0.05),
+    inset 0 -15px 15px rgba(25, 255, 255, 0.05),
+    0 15px 15px rgba(0,0,0,0.5),
+    inset 0 15px 15px rgba(0, 0, 0, 0.5);
+}
+
+.cell{
+    border: 1px solid #000000;
+    width : var(--cell-size);
+    height: var(--cell-size);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+    border-top: none;
+}
+
+.cell:last-child,
+.cell:nth-child(7),
+.cell:nth-child(8){
+    border-bottom: none;
+}
+
+.cell:nth-child(3n + 1){
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3){
+    border-right: none;
+}
+
+.cell.cross,
+.cell.circle{
+    cursor: not-allowed;
+}
+
+.cell.cross::before,
+.cell.cross::after,
+.cell.circle::before{
+    background-color: #000000;
+}
+
+.board.cross .cell:not(.cross):not(.circle):hover::before,
+.board.cross .cell:not(.cross):not(.circle):hover::after,
+.board.circle .cell:not(.cross):not(.circle):hover::before{
+    background-color: lightgray;
+}
+
+.cell.cross::before,
+.cell.cross::after,
+.board.cross .cell:not(.cross):not(.circle):hover::before,
+.board.cross .cell:not(.cross):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    height: var(--mark-size);
+    width: calc(var(--mark-size) * .15);
+}
+
+.cell.cross::before,
+.board.cross .cell:not(.cross):not(.circle):hover::before{
+    rotate: 45deg;
+}
+
+.cell.cross::after,
+.board.cross .cell:not(.cross):not(.circle):hover::after{
+    rotate: -45deg;
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.cross):not(.circle):hover::before,
+.board.circle .cell:not(.cross):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.cross):not(.circle):hover::before{
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.cross):not(.circle):hover::after{
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: #fff;
+}
+
+.winning-msg.show{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    bottom: 0;
+    background-color: #000000e7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.winning-msg-text{
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    font-size: 5rem;
+    animation: pulse 2s linear infinite;
+}
+
+@keyframes pulse {
+    0%{
+        text-shadow: 0 0 20px gold;
+    }
+    25%{
+        text-shadow: 0 0 10px gold;
+    }
+    50%{
+        text-shadow: 0 0 0 gold;
+    }
+    75%{
+        text-shadow: 0 0 10px gold;
+    }
+    100%{
+        text-shadow: 0 0 20px gold;
+    }
+}
+
+
+
+.restartButton{
+    cursor: pointer;
+    border-radius: 0;
+    border: 1px solid #000000;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 2rem;
+    padding: 8px 16px;
+    transition: color 150ms ease-in-out,background-color 150ms ease-in-out;
+}
+
+.restartButton:hover{
+    border: 1px solid #fff;
+    background-color: #000000;
+    color: #fff;
+}
